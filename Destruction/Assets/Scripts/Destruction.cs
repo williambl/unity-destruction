@@ -22,4 +22,9 @@ public class Destruction : MonoBehaviour {
         brokenObj.SetActive(!together);
     }
 
+    void OnCollisionEnter(Collision collision) {
+        if (collision.relativeVelocity.magnitude > 1)
+            together = false;
+    }
+
 }
