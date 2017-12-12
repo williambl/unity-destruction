@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Destruction : MonoBehaviour {
 
+    [Header("Game Objects")]
     public GameObject brokenObj;
     public GameObject togetherObj;
 
     // True if together, false if broken
+    [Space(10)]
+    [Header("State")]
     public bool together = true;
 
+    [Space(10)]
+    [Header("Breaking on Collision")]
     public bool breakOnCollision = true;
     public float velocityToBreak = 1;
 
