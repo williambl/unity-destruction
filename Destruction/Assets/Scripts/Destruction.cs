@@ -5,16 +5,19 @@ using UnityEngine;
 public class Destruction : MonoBehaviour {
 
     [Header("Game Objects")]
+    [Space(2)]
     public GameObject brokenObj;
     public GameObject togetherObj;
 
-    // True if together, false if broken
-    [Space(10)]
+    [Space(7)]
     [Header("State")]
+    [Space(2)]
+    // True if together, false if broken
     public bool together = true;
 
-    [Space(10)]
+    [Space(7)]
     [Header("Breaking on Collision")]
+    [Space(2)]
     public bool breakOnCollision = true;
     public float velocityToBreak = 1;
 
@@ -22,7 +25,7 @@ public class Destruction : MonoBehaviour {
     // Use this for initialization
     void Start () {
         togetherObj.SetActive(true);
-        brokenObj.SetActive(false);        
+        brokenObj.SetActive(false);
     }
 	
     // Update is called once per frame
