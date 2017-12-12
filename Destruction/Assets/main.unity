@@ -964,7 +964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 74987412}
   breakOnCollision: 1
-  velocityToBreak: 50
+  velocityToBreak: 5
 --- !u!1 &218643697 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1290174060389236, guid: f739327c24f1e47038ad8cb8cee369d1,
