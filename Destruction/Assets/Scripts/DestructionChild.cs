@@ -6,12 +6,17 @@ public class DestructionChild : MonoBehaviour {
 
     public Destruction parent;
 
+    public bool breakOnCollision = true;
+    public float velocityToBreak = 1;
+
     // Use this for initialization
     void Start () { 
     }
 	
     void OnCollisionEnter(Collision collision) {
-        if (collision.relativeVelocity.magnitude > 1)
+        if (!breakOnCollision)
+            return;
+        if (collision.relativeVelocity.magnitude > velocityToBreak)
             parent.together = false;
     }
 
