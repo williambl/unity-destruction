@@ -27,24 +27,29 @@ public class Destruction : MonoBehaviour {
     public bool breakOnNoSupports = false;
     public float raycastLength = 1f;
 
-    // Use this for initialization
     void Start () {
+        //Make sure the right object is active
         togetherObj.SetActive(true);
         brokenObj.SetActive(false);
     }
 	
     // Update is called once per frame
     void Update () {
+        /* Broken object should follow unbroken one to prevent them from
+         * being in the wrong place when they switch */
         brokenObj.transform.position = togetherObj.transform.position;
 
+        //Make sure the right object is active
         togetherObj.SetActive(together);
         brokenObj.SetActive(!together);
+
         if (breakOnNoSupports)
             CheckForSupports();
     }
 
     void CheckForSupports () {
         Debug.DrawRay(transform.position, Vector3.down);
+        //Check downwards for supports
         if (!Physics.Raycast(transform.position, Vector3.down, raycastLength))
             Break();
     }
@@ -52,6 +57,7 @@ public class Destruction : MonoBehaviour {
     void OnCollisionEnter(Collision collision) {
         if (!breakOnCollision)
             return;
+        //Only break if relative velocity is high enough
         if (collision.relativeVelocity.magnitude > velocityToBreak)
             Break();
     }
@@ -62,6 +68,8 @@ public class Destruction : MonoBehaviour {
 
     public void BreakWithExplosiveForce(float force, float radius = 3) {
         Break();
+
+        //Add the explosive force to each rigidbody
         foreach (Rigidbody rigid in brokenObj.GetComponentsInChildren<Rigidbody>()) {
             rigid.AddExplosionForce(force, transform.position, radius);
         }
