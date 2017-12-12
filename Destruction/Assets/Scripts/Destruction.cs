@@ -48,7 +48,6 @@ public class Destruction : MonoBehaviour {
     }
 
     void CheckForSupports () {
-        Debug.DrawRay(transform.position, Vector3.down);
         //Check downwards for supports
         if (!Physics.Raycast(transform.position, Vector3.down, raycastLength))
             Break();
