@@ -14,6 +14,8 @@ public class Destruction : MonoBehaviour {
     [Space(2)]
     // True if together, false if broken
     public bool together = true;
+    //Does it start broken?
+    public bool startBroken = false;
 
     [Space(7)]
     [Header("Breaking on Collision")]
@@ -29,8 +31,9 @@ public class Destruction : MonoBehaviour {
 
     void Start () {
         //Make sure the right object is active
-        togetherObj.SetActive(true);
-        brokenObj.SetActive(false);
+        togetherObj.SetActive(!startBroken);
+        brokenObj.SetActive(startBroken);
+        together = !startBroken;
     }
 	
     // Update is called once per frame
