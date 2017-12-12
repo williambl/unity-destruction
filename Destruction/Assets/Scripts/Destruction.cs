@@ -21,6 +21,11 @@ public class Destruction : MonoBehaviour {
     public bool breakOnCollision = true;
     public float velocityToBreak = 1;
 
+    [Space(7)]
+    [Header("Breaking when nothing underneath")]
+    [Space(2)]
+    public bool breakOnNoSupports = false;
+    public float raycastLength = 1f;
 
     // Use this for initialization
     void Start () {
@@ -32,6 +37,14 @@ public class Destruction : MonoBehaviour {
     void Update () {
         togetherObj.SetActive(together);
         brokenObj.SetActive(!together);
+        if (breakOnNoSupports)
+            CheckForSupports();
+    }
+
+    void CheckForSupports () {
+        Debug.DrawRay(transform.position, Vector3.down);
+        if (!Physics.Raycast(transform.position, Vector3.down, raycastLength))
+            Break();
     }
 
     void OnCollisionEnter(Collision collision) {
