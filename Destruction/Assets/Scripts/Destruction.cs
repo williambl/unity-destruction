@@ -35,7 +35,18 @@ public class Destruction : MonoBehaviour {
         if (!breakOnCollision)
             return;
         if (collision.relativeVelocity.magnitude > velocityToBreak)
-            together = false;
+            Break();
+    }
+
+    public void Break () {
+        together = false;
+    }
+
+    public void BreakWithExplosiveForce(float force, float radius = 3) {
+        Break();
+        foreach (Rigidbody rigid in brokenObj.GetComponentsInChildren<Rigidbody>()) {
+            rigid.AddExplosionForce(force, transform.position, radius);
+        }
     }
 
 }
