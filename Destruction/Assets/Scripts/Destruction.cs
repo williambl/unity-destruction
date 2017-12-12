@@ -35,6 +35,8 @@ public class Destruction : MonoBehaviour {
 	
     // Update is called once per frame
     void Update () {
+        brokenObj.transform.position = togetherObj.transform.position;
+
         togetherObj.SetActive(together);
         brokenObj.SetActive(!together);
         if (breakOnNoSupports)
