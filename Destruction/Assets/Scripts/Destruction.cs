@@ -10,6 +10,10 @@ public class Destruction : MonoBehaviour {
     // True if together, false if broken
     public bool together = true;
 
+    public bool breakOnCollision = true;
+    public float velocityToBreak = 1;
+
+
     // Use this for initialization
     void Start () {
         togetherObj.SetActive(true);
@@ -23,7 +27,9 @@ public class Destruction : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.relativeVelocity.magnitude > 1)
+        if (!breakOnCollision)
+            return;
+        if (collision.relativeVelocity.magnitude > velocityToBreak)
             together = false;
     }
 

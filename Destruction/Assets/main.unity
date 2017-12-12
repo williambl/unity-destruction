@@ -490,25 +490,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f739327c24f1e47038ad8cb8cee369d1, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &74987411 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1687328340349844, guid: f739327c24f1e47038ad8cb8cee369d1,
-    type: 2}
-  m_PrefabInternal: {fileID: 74987410}
---- !u!114 &74987412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 74987411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bf7b5ee6f4fc4ecbaff2c8512e53f24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brokenObj: {fileID: 1211661609}
-  togetherObj: {fileID: 212463101}
-  together: 1
 --- !u!1 &88793970 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1408924712203146, guid: f739327c24f1e47038ad8cb8cee369d1,
@@ -959,10 +940,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 212463101}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba9fb00c72feb489ab716a195a6ebaca, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bf7b5ee6f4fc4ecbaff2c8512e53f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 74987412}
+  brokenObj: {fileID: 1211661609}
+  togetherObj: {fileID: 212463101}
+  together: 1
   breakOnCollision: 1
   velocityToBreak: 5
 --- !u!1 &218643697 stripped
