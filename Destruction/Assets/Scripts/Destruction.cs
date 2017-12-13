@@ -35,8 +35,14 @@ public class Destruction : MonoBehaviour {
     public bool soundOnBreak = false;
     public AudioClip[] clips;
 
+    [Space(7)]
+    [Header("Particles on break")]
+    [Space(2)]
+    public bool particlesOnBreak = false;
+
     //Private vars
     private AudioSource src;
+    private ParticleSystem psys;
 
     void Start () {
         //Make sure the right object is active
@@ -47,6 +53,8 @@ public class Destruction : MonoBehaviour {
         if (soundOnBreak) {
             SetupSound();
         }
+        if (particlesOnBreak)
+            SetupParticles();
     }
 	
     void SetupSound() {
@@ -58,6 +66,14 @@ public class Destruction : MonoBehaviour {
 
         //Add a random audio clip to it
         src.clip = clips[Random.Range(0, clips.Length-1)];
+    }
+
+    void SetupParticles() {
+        psys = brokenObj.GetComponent<ParticleSystem>();
+        if (psys == null)
+            psys = brokenObj.AddComponent<ParticleSystem>();
+
+        psys.Stop();
     }
 
     // Update is called once per frame
@@ -94,6 +110,9 @@ public class Destruction : MonoBehaviour {
         //Play the sound
         if (soundOnBreak)
             src.Play();
+        //Show particles
+        if (particlesOnBreak)
+            psys.Play();
     }
 
     public void BreakWithExplosiveForce(float force, float radius = 3) {
