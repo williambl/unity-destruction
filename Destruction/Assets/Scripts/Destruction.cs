@@ -48,9 +48,8 @@ public class Destruction : MonoBehaviour {
         brokenObj.SetActive(startBroken);
         together = !startBroken;
 
-        if (soundOnBreak) {
+        if (soundOnBreak)
             SetupSound();
-        }
         if (particlesOnBreak)
             SetupParticles();
     }
@@ -58,9 +57,8 @@ public class Destruction : MonoBehaviour {
     void SetupSound() {
         //Get the audio source or create one
         src = brokenObj.GetComponent<AudioSource>();
-        if (src == null) {
+        if (src == null)
             src = brokenObj.AddComponent<AudioSource>();
-        }
 
         //Add a random audio clip to it
         src.clip = clips[Random.Range(0, clips.Length-1)];
@@ -118,9 +116,8 @@ public class Destruction : MonoBehaviour {
         Break();
 
         //Add the explosive force to each rigidbody
-        foreach (Rigidbody rigid in brokenObj.GetComponentsInChildren<Rigidbody>()) {
+        foreach (Rigidbody rigid in brokenObj.GetComponentsInChildren<Rigidbody>())
             rigid.AddExplosionForce(force, transform.position, radius);
-        }
     }
 
 }
