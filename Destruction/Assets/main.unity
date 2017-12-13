@@ -9592,7 +9592,8 @@ MonoBehaviour:
   breakOnNoSupports: 0
   raycastLength: 1
   soundOnBreak: 1
-  clips: []
+  clips:
+  - {fileID: 8300000, guid: 36e41891570854b5091704286ff06487, type: 3}
 --- !u!1 &218643697 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1290174060389236, guid: f739327c24f1e47038ad8cb8cee369d1,
