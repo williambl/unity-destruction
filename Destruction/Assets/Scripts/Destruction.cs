@@ -6,38 +6,47 @@ public class Destruction : MonoBehaviour {
 
     [Header("Game Objects")]
     [Space(2)]
+    [Tooltip("The broken gameObject")]
     public GameObject brokenObj;
+    [Tooltip("The unbroken gameObject")]
     public GameObject togetherObj;
 
     [Space(7)]
     [Header("State")]
     [Space(2)]
-    // True if together, false if broken
+    [Tooltip("Whether the object is unbroken")]
     public bool together = true;
-    //Does it start broken?
+    [Tooltip("Whether the object starts broken")]
     public bool startBroken = false;
 
     [Space(7)]
     [Header("Breaking on Collision")]
     [Space(2)]
+    [Tooltip("Whether the object breaks when it collides with something")]
     public bool breakOnCollision = true;
-    public float velocityToBreak = 1;
+    [Tooltip("The minimum relative velocity to break the object")]
+    public float velocityToBreak = 1; // Velocity required to break object
 
     [Space(7)]
     [Header("Breaking when nothing underneath")]
     [Space(2)]
+    [Tooltip("Whether the object breaks when there's nothing underneath supporting it")]
     public bool breakOnNoSupports = false;
+    [Tooltip("The length of the raycast used to check for supports underneath")]
     public float raycastLength = 1f;
 
     [Space(7)]
-    [Header("Sound on break")]
+    [Header("Sound On Break")]
     [Space(2)]
+    [Tooltip("Whether the object makes a sound when it breaks")]
     public bool soundOnBreak = false;
+    [Tooltip("An array of sounds for the object to make when it breaks (A random one will be selected)")]
     public AudioClip[] clips;
 
     [Space(7)]
-    [Header("Particles on break")]
+    [Header("Particles On Break")]
     [Space(2)]
+    [Tooltip("Whether the object makes particles when it breaks")]
     public bool particlesOnBreak = false;
 
     //Private vars
@@ -50,9 +59,8 @@ public class Destruction : MonoBehaviour {
         brokenObj.SetActive(startBroken);
         together = !startBroken;
 
-        if (soundOnBreak) {
+        if (soundOnBreak)
             SetupSound();
-        }
         if (particlesOnBreak)
             SetupParticles();
     }
@@ -60,23 +68,23 @@ public class Destruction : MonoBehaviour {
     void SetupSound() {
         //Get the audio source or create one
         src = brokenObj.GetComponent<AudioSource>();
-        if (src == null) {
+        if (src == null)
             src = brokenObj.AddComponent<AudioSource>();
-        }
 
         //Add a random audio clip to it
         src.clip = clips[Random.Range(0, clips.Length-1)];
     }
 
     void SetupParticles() {
+        // Get the particle system or create one
         psys = brokenObj.GetComponent<ParticleSystem>();
         if (psys == null)
             psys = brokenObj.AddComponent<ParticleSystem>();
 
+        //This doesn't seem to do anything b/c the gameobject is not active
         psys.Stop();
     }
 
-    // Update is called once per frame
     void Update () {
         /* Broken object should follow unbroken one to prevent them from
          * being in the wrong place when they switch */
@@ -119,9 +127,8 @@ public class Destruction : MonoBehaviour {
         Break();
 
         //Add the explosive force to each rigidbody
-        foreach (Rigidbody rigid in brokenObj.GetComponentsInChildren<Rigidbody>()) {
+        foreach (Rigidbody rigid in brokenObj.GetComponentsInChildren<Rigidbody>())
             rigid.AddExplosionForce(force, transform.position, radius);
-        }
     }
 
 }
