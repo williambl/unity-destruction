@@ -45,14 +45,21 @@ public class Destruction : MonoBehaviour {
         together = !startBroken;
 
         if (soundOnBreak) {
-            //Get the audio source or create one
-            src = GetComponent<AudioSource>();
-            if (src == null) {
-                src = gameObject.AddComponent<AudioSource>();
-            }
+            SetupSound();
         }
     }
 	
+    void SetupSound() {
+        //Get the audio source or create one
+        src = GetComponent<AudioSource>();
+        if (src == null) {
+            src = gameObject.AddComponent<AudioSource>();
+        }
+
+        //Add a random audio clip to it
+        src.clip = clips[Random.Range(0, clips.Length-1)];
+    }
+
     // Update is called once per frame
     void Update () {
         /* Broken object should follow unbroken one to prevent them from
