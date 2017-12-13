@@ -12,16 +12,14 @@ public class Destruction : MonoBehaviour {
     [Space(7)]
     [Header("State")]
     [Space(2)]
-    // True if together, false if broken
-    public bool together = true;
-    //Does it start broken?
-    public bool startBroken = false;
+    public bool together = true; // True if together, false if broken
+    public bool startBroken = false; // Does it start broken?
 
     [Space(7)]
     [Header("Breaking on Collision")]
     [Space(2)]
     public bool breakOnCollision = true;
-    public float velocityToBreak = 1;
+    public float velocityToBreak = 1; // Velocity required to break object
 
     [Space(7)]
     [Header("Breaking when nothing underneath")]
@@ -69,14 +67,15 @@ public class Destruction : MonoBehaviour {
     }
 
     void SetupParticles() {
+        // Get the particle system or create one
         psys = brokenObj.GetComponent<ParticleSystem>();
         if (psys == null)
             psys = brokenObj.AddComponent<ParticleSystem>();
 
+        //This doesn't seem to do anything b/c the gameobject is not active
         psys.Stop();
     }
 
-    // Update is called once per frame
     void Update () {
         /* Broken object should follow unbroken one to prevent them from
          * being in the wrong place when they switch */
