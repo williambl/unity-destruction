@@ -90,6 +90,10 @@ public class Destruction : MonoBehaviour {
 
     public void Break () {
         together = false;
+
+        //Play the sound
+        if (soundOnBreak)
+            src.Play();
     }
 
     public void BreakWithExplosiveForce(float force, float radius = 3) {
