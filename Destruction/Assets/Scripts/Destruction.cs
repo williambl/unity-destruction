@@ -6,36 +6,47 @@ public class Destruction : MonoBehaviour {
 
     [Header("Game Objects")]
     [Space(2)]
+    [Tooltip("The broken gameObject")]
     public GameObject brokenObj;
+    [Tooltip("The unbroken gameObject")]
     public GameObject togetherObj;
 
     [Space(7)]
     [Header("State")]
     [Space(2)]
-    public bool together = true; // True if together, false if broken
-    public bool startBroken = false; // Does it start broken?
+    [Tooltip("Whether the object is unbroken")]
+    public bool together = true;
+    [Tooltip("Whether the object starts broken")]
+    public bool startBroken = false;
 
     [Space(7)]
     [Header("Breaking on Collision")]
     [Space(2)]
+    [Tooltip("Whether the object breaks when it collides with something")]
     public bool breakOnCollision = true;
+    [Tooltip("The minimum relative velocity to break the object")]
     public float velocityToBreak = 1; // Velocity required to break object
 
     [Space(7)]
     [Header("Breaking when nothing underneath")]
     [Space(2)]
+    [Tooltip("Whether the object breaks when there's nothing underneath supporting it")]
     public bool breakOnNoSupports = false;
+    [Tooltip("The length of the raycast used to check for supports underneath")]
     public float raycastLength = 1f;
 
     [Space(7)]
     [Header("Sound on break")]
     [Space(2)]
+    [Tooltip("Whether the object makes a sound when it breaks")]
     public bool soundOnBreak = false;
+    [Tooltip("An array of sounds for the object to make when it breaks (A random one will be selected)")]
     public AudioClip[] clips;
 
     [Space(7)]
     [Header("Particles on break")]
     [Space(2)]
+    [Tooltip("Whether the object makes particles when it breaks")]
     public bool particlesOnBreak = false;
 
     //Private vars
