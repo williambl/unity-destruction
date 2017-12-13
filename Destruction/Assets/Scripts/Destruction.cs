@@ -51,9 +51,9 @@ public class Destruction : MonoBehaviour {
 	
     void SetupSound() {
         //Get the audio source or create one
-        src = GetComponent<AudioSource>();
+        src = brokenObj.GetComponent<AudioSource>();
         if (src == null) {
-            src = gameObject.AddComponent<AudioSource>();
+            src = brokenObj.AddComponent<AudioSource>();
         }
 
         //Add a random audio clip to it
