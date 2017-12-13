@@ -110,6 +110,9 @@ public class Destruction : MonoBehaviour {
         //Play the sound
         if (soundOnBreak)
             src.Play();
+        //Show particles
+        if (particlesOnBreak)
+            psys.Play();
     }
 
     public void BreakWithExplosiveForce(float force, float radius = 3) {
