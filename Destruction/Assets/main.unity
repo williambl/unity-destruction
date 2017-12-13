@@ -8751,6 +8751,8 @@ MonoBehaviour:
   velocityToBreak: 5
   breakOnNoSupports: 1
   raycastLength: 1
+  soundOnBreak: 0
+  clips: []
 --- !u!64 &3315099
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9589,6 +9591,8 @@ MonoBehaviour:
   velocityToBreak: 5
   breakOnNoSupports: 0
   raycastLength: 1
+  soundOnBreak: 1
+  clips: []
 --- !u!1 &218643697 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1290174060389236, guid: f739327c24f1e47038ad8cb8cee369d1,
@@ -24734,6 +24738,8 @@ MonoBehaviour:
   velocityToBreak: 5
   breakOnNoSupports: 0
   raycastLength: 1
+  soundOnBreak: 0
+  clips: []
 --- !u!64 &1660533548
 MeshCollider:
   m_ObjectHideFlags: 0

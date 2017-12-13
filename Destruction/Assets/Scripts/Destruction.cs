@@ -29,11 +29,28 @@ public class Destruction : MonoBehaviour {
     public bool breakOnNoSupports = false;
     public float raycastLength = 1f;
 
+    [Space(7)]
+    [Header("Sound on break")]
+    [Space(2)]
+    public bool soundOnBreak = false;
+    public AudioClip[] clips;
+
+    //Private vars
+    private AudioSource src;
+
     void Start () {
         //Make sure the right object is active
         togetherObj.SetActive(!startBroken);
         brokenObj.SetActive(startBroken);
         together = !startBroken;
+
+        if (soundOnBreak) {
+            //Get the audio source or create one
+            src = GetComponent<AudioSource>();
+            if (src == null) {
+                src = gameObject.AddComponent<AudioSource>();
+            }
+        }
     }
 	
     // Update is called once per frame
