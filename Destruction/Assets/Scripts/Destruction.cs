@@ -36,7 +36,7 @@ public class Destruction : MonoBehaviour {
     public float raycastLength = 1f;
 
     [Space(7)]
-    [Header("Sound on break")]
+    [Header("Sound On Break")]
     [Space(2)]
     [Tooltip("Whether the object makes a sound when it breaks")]
     public bool soundOnBreak = false;
@@ -44,7 +44,7 @@ public class Destruction : MonoBehaviour {
     public AudioClip[] clips;
 
     [Space(7)]
-    [Header("Particles on break")]
+    [Header("Particles On Break")]
     [Space(2)]
     [Tooltip("Whether the object makes particles when it breaks")]
     public bool particlesOnBreak = false;
