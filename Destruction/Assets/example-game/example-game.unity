@@ -17658,7 +17658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 1773139963039856, guid: f9bf575a4195a48b6a3c70eaa206eb34, type: 2}
-  forceMultiplier: 1000
+  forceMultiplier: 100000
 --- !u!1 &591277385
 GameObject:
   m_ObjectHideFlags: 0
