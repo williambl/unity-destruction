@@ -2,6 +2,8 @@
 
 An open-source script to destroy objects realistically in Unity3D.
 
+[Video](https://gfycat.com/EverlastingSharpBantamrooster)
+
 ## Features
 
 - Make stuff break up on impact with other stuff!
