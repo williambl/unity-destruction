@@ -47,14 +47,19 @@ public class Destruction : MonoBehaviour {
     private ParticleSystem psys;
 
     private GameObject brokenObj;
+    private Rigidbody rigidbody;
+    private Collider coll;
     private Rigidbody[] rigids;
 
     void Start () {
         //Get the rigidbodies
         rigids = gameObject.GetComponentsInChildren<Rigidbody>();
-        together = !startBroken;
-
+        coll = GetComponent<Collider>();
+        rigidbody = GetComponent<Rigidbody>();
         brokenObj = gameObject;
+
+        together = !startBroken;
+        SetPiecesKinematic(together);
 
         if (soundOnBreak)
             SetupSound();
@@ -93,7 +98,6 @@ public class Destruction : MonoBehaviour {
         if (!together)
             Break();
 
-
         if (breakOnNoSupports)
             CheckForSupports();
     }
@@ -113,8 +117,7 @@ public class Destruction : MonoBehaviour {
     }
 
     public void Break () {
-        foreach (Rigidbody rigid in rigids)
-            rigid.isKinematic = false;
+        SetPiecesKinematic(false);
 
         //Play the sound
         if (soundOnBreak)
@@ -122,6 +125,15 @@ public class Destruction : MonoBehaviour {
         //Show particles
         if (particlesOnBreak)
             psys.Play();
+    }
+
+    void SetPiecesKinematic (bool valueIn) {
+        foreach (Rigidbody rigid in rigids) {
+            rigid.isKinematic = valueIn;
+            rigid.GetComponent<Collider>().enabled = !valueIn;
+        }
+        coll.enabled = valueIn;
+        rigidbody.isKinematic = !valueIn;
     }
 
     public void BreakWithExplosiveForce(float force, float radius = 3) {
