@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Destruction : MonoBehaviour {
 
-    [Header("Game Objects")]
-    [Space(2)]
-    [Tooltip("The broken gameObject")]
-    public GameObject brokenObj;
-    [Tooltip("The unbroken gameObject")]
-    public GameObject togetherObj;
-
     [Space(7)]
     [Header("State")]
     [Space(2)]
@@ -53,11 +46,15 @@ public class Destruction : MonoBehaviour {
     private AudioSource src;
     private ParticleSystem psys;
 
+    private GameObject brokenObj;
+    private Rigidbody[] rigids;
+
     void Start () {
-        //Make sure the right object is active
-        togetherObj.SetActive(!startBroken);
-        brokenObj.SetActive(startBroken);
+        //Get the rigidbodies
+        rigids = gameObject.GetComponentsInChildren<Rigidbody>();
         together = !startBroken;
+
+        brokenObj = gameObject;
 
         if (soundOnBreak)
             SetupSound();
@@ -88,11 +85,14 @@ public class Destruction : MonoBehaviour {
     void Update () {
         /* Broken object should follow unbroken one to prevent them from
          * being in the wrong place when they switch */
-        brokenObj.transform.position = togetherObj.transform.position;
+        //brokenObj.transform.position = togetherObj.transform.position;
 
         //Make sure the right object is active
-        togetherObj.SetActive(together);
-        brokenObj.SetActive(!together);
+        //togetherObj.SetActive(together);
+        //brokenObj.SetActive(!together);
+        if (!together)
+            Break();
+
 
         if (breakOnNoSupports)
             CheckForSupports();
@@ -113,7 +113,8 @@ public class Destruction : MonoBehaviour {
     }
 
     public void Break () {
-        together = false;
+        foreach (Rigidbody rigid in rigids)
+            rigid.isKinematic = false;
 
         //Play the sound
         if (soundOnBreak)
@@ -127,7 +128,7 @@ public class Destruction : MonoBehaviour {
         Break();
 
         //Add the explosive force to each rigidbody
-        foreach (Rigidbody rigid in brokenObj.GetComponentsInChildren<Rigidbody>())
+        foreach (Rigidbody rigid in rigids)
             rigid.AddExplosionForce(force, transform.position, radius);
     }
 
