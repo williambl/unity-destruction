@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Destruction : MonoBehaviour {
 
-    [Header("Game Objects")]
-    [Space(2)]
-    [Tooltip("The broken gameObject")]
-    public GameObject brokenObj;
-    [Tooltip("The unbroken gameObject")]
-    public GameObject togetherObj;
-
     [Space(7)]
     [Header("State")]
     [Space(2)]
@@ -53,11 +46,18 @@ public class Destruction : MonoBehaviour {
     private AudioSource src;
     private ParticleSystem psys;
 
+    private Rigidbody rigidbody;
+    private Collider coll;
+    private Rigidbody[] rigids;
+
     void Start () {
-        //Make sure the right object is active
-        togetherObj.SetActive(!startBroken);
-        brokenObj.SetActive(startBroken);
+        //Get the rigidbodies
+        rigids = gameObject.GetComponentsInChildren<Rigidbody>();
+        coll = GetComponent<Collider>();
+        rigidbody = GetComponent<Rigidbody>();
+
         together = !startBroken;
+        SetPiecesKinematic(together);
 
         if (soundOnBreak)
             SetupSound();
@@ -67,9 +67,9 @@ public class Destruction : MonoBehaviour {
 	
     void SetupSound() {
         //Get the audio source or create one
-        src = brokenObj.GetComponent<AudioSource>();
+        src = GetComponent<AudioSource>();
         if (src == null)
-            src = brokenObj.AddComponent<AudioSource>();
+            src = gameObject.AddComponent<AudioSource>();
 
         //Add a random audio clip to it
         src.clip = clips[Random.Range(0, clips.Length-1)];
@@ -77,9 +77,9 @@ public class Destruction : MonoBehaviour {
 
     void SetupParticles() {
         // Get the particle system or create one
-        psys = brokenObj.GetComponent<ParticleSystem>();
+        psys = GetComponent<ParticleSystem>();
         if (psys == null)
-            psys = brokenObj.AddComponent<ParticleSystem>();
+            psys = gameObject.AddComponent<ParticleSystem>();
 
         //This doesn't seem to do anything b/c the gameobject is not active
         psys.Stop();
@@ -88,11 +88,13 @@ public class Destruction : MonoBehaviour {
     void Update () {
         /* Broken object should follow unbroken one to prevent them from
          * being in the wrong place when they switch */
-        brokenObj.transform.position = togetherObj.transform.position;
+        //brokenObj.transform.position = togetherObj.transform.position;
 
         //Make sure the right object is active
-        togetherObj.SetActive(together);
-        brokenObj.SetActive(!together);
+        //togetherObj.SetActive(together);
+        //brokenObj.SetActive(!together);
+        if (!together)
+            Break();
 
         if (breakOnNoSupports)
             CheckForSupports();
@@ -113,7 +115,7 @@ public class Destruction : MonoBehaviour {
     }
 
     public void Break () {
-        together = false;
+        SetPiecesKinematic(false);
 
         //Play the sound
         if (soundOnBreak)
@@ -123,11 +125,20 @@ public class Destruction : MonoBehaviour {
             psys.Play();
     }
 
+    void SetPiecesKinematic (bool valueIn) {
+        foreach (Rigidbody rigid in rigids) {
+            rigid.isKinematic = valueIn;
+            rigid.GetComponent<Collider>().enabled = !valueIn;
+        }
+        coll.enabled = valueIn;
+        rigidbody.isKinematic = !valueIn;
+    }
+
     public void BreakWithExplosiveForce(float force, float radius = 3) {
         Break();
 
         //Add the explosive force to each rigidbody
-        foreach (Rigidbody rigid in brokenObj.GetComponentsInChildren<Rigidbody>())
+        foreach (Rigidbody rigid in rigids)
             rigid.AddExplosionForce(force, transform.position, radius);
     }
 
