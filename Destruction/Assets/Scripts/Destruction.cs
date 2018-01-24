@@ -46,7 +46,6 @@ public class Destruction : MonoBehaviour {
     private AudioSource src;
     private ParticleSystem psys;
 
-    private GameObject brokenObj;
     private Rigidbody rigidbody;
     private Collider coll;
     private Rigidbody[] rigids;
@@ -56,7 +55,6 @@ public class Destruction : MonoBehaviour {
         rigids = gameObject.GetComponentsInChildren<Rigidbody>();
         coll = GetComponent<Collider>();
         rigidbody = GetComponent<Rigidbody>();
-        brokenObj = gameObject;
 
         together = !startBroken;
         SetPiecesKinematic(together);
@@ -69,9 +67,9 @@ public class Destruction : MonoBehaviour {
 	
     void SetupSound() {
         //Get the audio source or create one
-        src = brokenObj.GetComponent<AudioSource>();
+        src = GetComponent<AudioSource>();
         if (src == null)
-            src = brokenObj.AddComponent<AudioSource>();
+            src = gameObject.AddComponent<AudioSource>();
 
         //Add a random audio clip to it
         src.clip = clips[Random.Range(0, clips.Length-1)];
@@ -79,9 +77,9 @@ public class Destruction : MonoBehaviour {
 
     void SetupParticles() {
         // Get the particle system or create one
-        psys = brokenObj.GetComponent<ParticleSystem>();
+        psys = GetComponent<ParticleSystem>();
         if (psys == null)
-            psys = brokenObj.AddComponent<ParticleSystem>();
+            psys = gameObject.AddComponent<ParticleSystem>();
 
         //This doesn't seem to do anything b/c the gameobject is not active
         psys.Stop();
