@@ -42,6 +42,8 @@ public class Destruction : MonoBehaviour {
     [Tooltip("Whether the object makes particles when it breaks")]
     public bool particlesOnBreak = false;
 
+
+    public float breakageMultiplier = 0.3f;
     //Private vars
     private AudioSource src;
     private ParticleSystem psys;
@@ -112,6 +114,11 @@ public class Destruction : MonoBehaviour {
         //Only break if relative velocity is high enough
         if (collision.relativeVelocity.magnitude > velocityToBreak)
             Break();
+        else if (collision.relativeVelocity.magnitude / velocityToBreak > breakageMultiplier) {
+            print (collision.relativeVelocity.magnitude / velocityToBreak);
+            Collider[] pieces = Physics.OverlapSphere(collision.contacts[0].point, collision.relativeVelocity.magnitude / velocityToBreak * breakageMultiplier);
+            print("Amount:" + pieces.Length);
+        }
     }
 
     public void Break () {
