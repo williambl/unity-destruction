@@ -118,6 +118,11 @@ public class Destruction : MonoBehaviour {
             print (collision.relativeVelocity.magnitude / velocityToBreak);
             Collider[] pieces = Physics.OverlapSphere(collision.contacts[0].point, collision.relativeVelocity.magnitude / velocityToBreak * breakageMultiplier);
             print("Amount:" + pieces.Length);
+
+            foreach (Collider piece in pieces) {
+                Rigidbody rigid = piece.GetComponent<Rigidbody>();
+                rigid.isKinematic = false;
+            }
         }
     }
 
