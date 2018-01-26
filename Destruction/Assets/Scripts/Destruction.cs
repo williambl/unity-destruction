@@ -46,6 +46,7 @@ public class Destruction : MonoBehaviour {
     float sphereRadius = 0f;
 
     public float breakageMultiplier = 0.3f;
+    public float strength = 0.3f;
     //Private vars
     private AudioSource src;
     private ParticleSystem psys;
@@ -116,7 +117,7 @@ public class Destruction : MonoBehaviour {
         //Only break if relative velocity is high enough
         if (collision.relativeVelocity.magnitude > velocityToBreak)
             Break();
-        else if (collision.relativeVelocity.magnitude / velocityToBreak > breakageMultiplier) {
+        else if (collision.relativeVelocity.magnitude / velocityToBreak > strength) {
             print (collision.relativeVelocity.magnitude / velocityToBreak);
 
             spherePoint = collision.contacts[0].point;
