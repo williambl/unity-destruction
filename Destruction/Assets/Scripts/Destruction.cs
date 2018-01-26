@@ -42,6 +42,8 @@ public class Destruction : MonoBehaviour {
     [Tooltip("Whether the object makes particles when it breaks")]
     public bool particlesOnBreak = false;
 
+    Vector3 spherePoint = Vector3.zero;
+    float sphereRadius = 0f;
 
     public float breakageMultiplier = 0.3f;
     //Private vars
@@ -116,7 +118,10 @@ public class Destruction : MonoBehaviour {
             Break();
         else if (collision.relativeVelocity.magnitude / velocityToBreak > breakageMultiplier) {
             print (collision.relativeVelocity.magnitude / velocityToBreak);
-            Collider[] pieces = Physics.OverlapSphere(collision.contacts[0].point, collision.relativeVelocity.magnitude / velocityToBreak * breakageMultiplier);
+
+            spherePoint = collision.contacts[0].point;
+            sphereRadius = collision.relativeVelocity.magnitude / velocityToBreak * breakageMultiplier;
+            Collider[] pieces = Physics.OverlapSphere(spherePoint, sphereRadius, 1 << 8);
             print("Amount:" + pieces.Length);
 
             foreach (Collider piece in pieces) {
@@ -124,6 +129,10 @@ public class Destruction : MonoBehaviour {
                 rigid.isKinematic = false;
             }
         }
+    }
+
+    void OnDrawGizmos () {
+        Gizmos.DrawSphere(spherePoint, sphereRadius);
     }
 
     public void Break () {
