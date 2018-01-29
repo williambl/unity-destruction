@@ -13,6 +13,14 @@ public class Destruction : MonoBehaviour {
     public bool startBroken = false;
 
     [Space(7)]
+    [Header("General Settings")]
+    [Space(2)]
+    [Tooltip("The higher this is, the more will break off in an impact")]
+    public float breakageMultiplier = 0.3f;
+    [Tooltip("How resistant the object initially is to breakage.")]
+    public float strength = 0.3f;
+
+    [Space(7)]
     [Header("Breaking on Collision")]
     [Space(2)]
     [Tooltip("Whether the object breaks when it collides with something")]
@@ -42,14 +50,12 @@ public class Destruction : MonoBehaviour {
     [Tooltip("Whether the object makes particles when it breaks")]
     public bool particlesOnBreak = false;
 
-    Vector3 spherePoint = Vector3.zero;
-    float sphereRadius = 0f;
-
-    public float breakageMultiplier = 0.3f;
-    public float strength = 0.3f;
     //Private vars
     private AudioSource src;
     private ParticleSystem psys;
+
+    private Vector3 spherePoint = Vector3.zero;
+    private float sphereRadius = 0f;
 
     private Rigidbody rigidbody;
     private Collider coll;
@@ -118,8 +124,6 @@ public class Destruction : MonoBehaviour {
         if (collision.relativeVelocity.magnitude > velocityToBreak)
             Break();
         else if (collision.relativeVelocity.magnitude / velocityToBreak > strength) {
-            print (collision.relativeVelocity.magnitude / velocityToBreak);
-
             spherePoint = collision.contacts[0].point;
             sphereRadius = collision.relativeVelocity.magnitude / velocityToBreak * breakageMultiplier;
             
@@ -127,7 +131,6 @@ public class Destruction : MonoBehaviour {
                 rigid.GetComponent<Collider>().enabled = true;
 
             Collider[] pieces = Physics.OverlapSphere(spherePoint, sphereRadius, 1 << 8);
-            print("Amount:" + pieces.Length);
 
             foreach (Collider piece in pieces) {
                 Rigidbody rigid = piece.GetComponent<Rigidbody>();
@@ -137,10 +140,6 @@ public class Destruction : MonoBehaviour {
             foreach (Rigidbody rigid in rigids)
                 rigid.GetComponent<Collider>().enabled = !rigid.isKinematic;
         }
-    }
-
-    void OnDrawGizmos () {
-        Gizmos.DrawSphere(spherePoint, sphereRadius);
     }
 
     public void Break () {
