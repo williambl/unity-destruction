@@ -122,6 +122,10 @@ public class Destruction : MonoBehaviour {
 
             spherePoint = collision.contacts[0].point;
             sphereRadius = collision.relativeVelocity.magnitude / velocityToBreak * breakageMultiplier;
+            
+            foreach (Rigidbody rigid in rigids)
+                rigid.GetComponent<Collider>().enabled = true;
+
             Collider[] pieces = Physics.OverlapSphere(spherePoint, sphereRadius, 1 << 8);
             print("Amount:" + pieces.Length);
 
@@ -129,6 +133,9 @@ public class Destruction : MonoBehaviour {
                 Rigidbody rigid = piece.GetComponent<Rigidbody>();
                 rigid.isKinematic = false;
             }
+
+            foreach (Rigidbody rigid in rigids)
+                rigid.GetComponent<Collider>().enabled = !rigid.isKinematic;
         }
     }
 
