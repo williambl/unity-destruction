@@ -124,19 +124,26 @@ public class Destruction : MonoBehaviour {
         if (collision.relativeVelocity.magnitude > velocityToBreak)
             Break();
         else if (collision.relativeVelocity.magnitude / velocityToBreak > strength) {
+            //Otherwise, if velocity is strong enough to break some bits but not others...
+            
+            //Get the impact point
             spherePoint = collision.contacts[0].point;
+            //Get the radius within which we'll break pieces
             sphereRadius = collision.relativeVelocity.magnitude / velocityToBreak * breakageMultiplier;
             
+            //Turn on Colliders so that Physics.OverlapSphere will work
             foreach (Rigidbody rigid in rigids)
                 rigid.GetComponent<Collider>().enabled = true;
 
             Collider[] pieces = Physics.OverlapSphere(spherePoint, sphereRadius, 1 << 8);
 
+            //Make the broken-off pieces non-kinematic
             foreach (Collider piece in pieces) {
                 Rigidbody rigid = piece.GetComponent<Rigidbody>();
                 rigid.isKinematic = false;
             }
 
+            //And turn off the Colliders of the not broken-off pieces 
             foreach (Rigidbody rigid in rigids)
                 rigid.GetComponent<Collider>().enabled = !rigid.isKinematic;
         }
