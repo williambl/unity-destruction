@@ -13,6 +13,14 @@ public class Destruction : MonoBehaviour {
     public bool startBroken = false;
 
     [Space(7)]
+    [Header("General Settings")]
+    [Space(2)]
+    [Tooltip("The higher this is, the more will break off in an impact")]
+    public float breakageMultiplier = 0.3f;
+    [Tooltip("How resistant the object initially is to breakage.")]
+    public float strength = 0.3f;
+
+    [Space(7)]
     [Header("Breaking on Collision")]
     [Space(2)]
     [Tooltip("Whether the object breaks when it collides with something")]
@@ -45,6 +53,9 @@ public class Destruction : MonoBehaviour {
     //Private vars
     private AudioSource src;
     private ParticleSystem psys;
+
+    private Vector3 spherePoint = Vector3.zero;
+    private float sphereRadius = 0f;
 
     private Rigidbody rigidbody;
     private Collider coll;
@@ -112,6 +123,30 @@ public class Destruction : MonoBehaviour {
         //Only break if relative velocity is high enough
         if (collision.relativeVelocity.magnitude > velocityToBreak)
             Break();
+        else if (collision.relativeVelocity.magnitude / velocityToBreak > strength) {
+            //Otherwise, if velocity is strong enough to break some bits but not others...
+            
+            //Get the impact point
+            spherePoint = collision.contacts[0].point;
+            //Get the radius within which we'll break pieces
+            sphereRadius = collision.relativeVelocity.magnitude / velocityToBreak * breakageMultiplier;
+            
+            //Turn on Colliders so that Physics.OverlapSphere will work
+            foreach (Rigidbody rigid in rigids)
+                rigid.GetComponent<Collider>().enabled = true;
+
+            Collider[] pieces = Physics.OverlapSphere(spherePoint, sphereRadius, 1 << 8);
+
+            //Make the broken-off pieces non-kinematic
+            foreach (Collider piece in pieces) {
+                Rigidbody rigid = piece.GetComponent<Rigidbody>();
+                rigid.isKinematic = false;
+            }
+
+            //And turn off the Colliders of the not broken-off pieces 
+            foreach (Rigidbody rigid in rigids)
+                rigid.GetComponent<Collider>().enabled = !rigid.isKinematic;
+        }
     }
 
     public void Break () {
