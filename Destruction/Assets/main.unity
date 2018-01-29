@@ -150,7 +150,12 @@ Prefab:
     - target: {fileID: 114380238778680644, guid: f739327c24f1e47038ad8cb8cee369d1,
         type: 2}
       propertyPath: breakageMultiplier
-      value: 5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54251121328995672, guid: f739327c24f1e47038ad8cb8cee369d1,
+        type: 2}
+      propertyPath: m_UseGravity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f739327c24f1e47038ad8cb8cee369d1, type: 2}
