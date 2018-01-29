@@ -6,6 +6,7 @@ public class ThrowBall : MonoBehaviour {
 
     public GameObject ball;
     public float forceMultiplier;
+    public UnityEngine.UI.Text text;
     Camera camera;
 
     void Start () {
@@ -13,6 +14,8 @@ public class ThrowBall : MonoBehaviour {
     }
 	
     void Update () {
+        text.text = "Throw Power: "+forceMultiplier;
+
         if (Input.GetButtonDown("Fire1")) {
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             GameObject newBall = Instantiate(ball, ray.origin, Quaternion.Euler(Vector3.zero));
