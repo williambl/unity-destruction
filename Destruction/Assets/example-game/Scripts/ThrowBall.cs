@@ -16,6 +16,11 @@ public class ThrowBall : MonoBehaviour {
     void Update () {
         text.text = "Throw Power: "+forceMultiplier;
 
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            forceMultiplier += forceMultiplier/100;
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            forceMultiplier -= forceMultiplier/100;
+
         if (Input.GetButtonDown("Fire1")) {
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             GameObject newBall = Instantiate(ball, ray.origin, Quaternion.Euler(Vector3.zero));
