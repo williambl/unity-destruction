@@ -19,13 +19,15 @@ public class Destruction : MonoBehaviour {
     public float breakageMultiplier = 0.3f;
     [Tooltip("How resistant the object initially is to breakage.")]
     public float strength = 0.3f;
+    [Tooltip("Whether or not to use momentum rather than velocity to work out destruction")]
+    public bool useMomentum = false;
 
     [Space(7)]
     [Header("Breaking on Collision")]
     [Space(2)]
     [Tooltip("Whether the object breaks when it collides with something")]
     public bool breakOnCollision = true;
-    [Tooltip("The minimum relative velocity to break the object")]
+    [Tooltip("The minimum relative velocity (or momentum if useMomentum is true) to break the object")]
     public float velocityToBreak = 1; // Velocity required to break object
 
     [Space(7)]
@@ -121,9 +123,9 @@ public class Destruction : MonoBehaviour {
         if (!breakOnCollision)
             return;
         //Only break if relative velocity is high enough
-        if (collision.relativeVelocity.magnitude > velocityToBreak)
+        if (CheckMomentumOrVelocity(collision, velocityToBreak))
             Break();
-        else if (collision.relativeVelocity.magnitude / velocityToBreak > strength) {
+        else if (CheckMomentumOrVelocity(collision, strength)) {
             //Otherwise, if velocity is strong enough to break some bits but not others...
             
             //Get the impact point
@@ -147,6 +149,13 @@ public class Destruction : MonoBehaviour {
             foreach (Rigidbody rigid in rigids)
                 rigid.GetComponent<Collider>().enabled = !rigid.isKinematic;
         }
+    }
+
+    bool CheckMomentumOrVelocity (Collision collision, float check) {
+        if (useMomentum && collision.rigidbody != null)
+            return collision.relativeVelocity.magnitude * collision.rigidbody.mass > check;
+        //If no rigidbody, use velocity
+        return collision.relativeVelocity.magnitude > check;
     }
 
     public void Break () {
