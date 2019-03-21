@@ -10,8 +10,8 @@ An open-source script to destroy objects realistically in Unity3D.
 - Make stuff break up when there's nothing underneath supporting it!
 - Make stuff break up for no reason whatsoever!
 - Make stuff explode!
-- Make stuff make sounds when it breaks!
-- Make stuff make particles when it breaks!
+- Make stuff make sounds when it breaks up!
+- Make stuff make particles when it breaks up!
 - Things can also be configured to only partially break apart, depending on impact velocity.
 - Includes an example game where you can throw a ball at a cube. It's funner than it sounds.
 
