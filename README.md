@@ -13,12 +13,12 @@ An open-source script to destroy objects realistically in Unity3D.
 - Make stuff make sounds when it breaks up!
 - Make stuff make particles when it breaks up!
 - Things can also be configured to only partially break apart, depending on impact velocity.
-- Includes an example game where you can throw a ball at a cube. It's more fun than it sounds.
+- Includes an example game where you can throw a ball at a cube. It's funner than it sounds.
 
 ## How to use
 
 - Make an unbroken and a broken version of your object. I recommend using Blender's [cell fracture](https://duckduckgo.com/?q=blender+cell+fracture) feature.
-- Add 'Destruction/Assets/Scripts/Destruction.cs' to the unbroken one.
-- Mess with the settings until you get the breaking apart effect how you want it.
+- Add 'Destruction/Assets/Scripts/Destruction.cs' to the unbroken version.
+- Mess with the settings until you get the desired breaking effect.
 - For examples, see 'Destruction/main.unity'.
 - Use Destruction.Break() to break things via a script, or Destruction.BreakWithExplosiveForce(float, float) to break things with explosive force via a script.
